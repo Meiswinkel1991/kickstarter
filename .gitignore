@@ -9,3 +9,5 @@ deployedContract.json
 
 # next config file
 next.config.js
+
+.env
