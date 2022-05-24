@@ -56,7 +56,7 @@ contract Campaign {
         require(msg.value > minimumContribution);
         approvers[msg.sender] = true;
 
-        numRequests ++;
+        numApprovers ++;
     }
 
     function createRequest(
