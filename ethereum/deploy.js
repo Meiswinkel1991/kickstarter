@@ -1,11 +1,13 @@
-require('dotenv').config()
+const dotenv = require("dotenv")
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const { interfaces } = require("mocha");
 const Web3 = require("web3");
 
+dotenv.config({path: '../.env'});
+
+
 // Getting the compiled contracts
 const compiledFactory = require('../ethereum/build/CampaignFactory.json');
-
 
 
 // Rinkbey API Infura

@@ -1,26 +1,22 @@
 import React from 'react';
-
+import { useRouter} from "next/router";
+import Link from 'next/link';
 import { Card,Button } from 'semantic-ui-react';
 
-
-import Layout from '../components/Layout';
 import factory from '../ethereum/factory';
 
 
-class CampaignIndex extends React.Component {
 
-    static async getInitialProps() {
+const CampaignIndex = ({campaigns}) => {
+
+    const router = useRouter();
+
+    const renderCampaigns = () => {
         
-        const campaigns = await factory.methods.getDeployedCampaigns().call();
-
-        return {campaigns: campaigns};
-    };
-
-    renderCampaigns() {
-        const items = this.props.campaigns.map(address => {
+        const items = campaigns.map(address => {
             return{
                 header: address,
-                description: <a>View Campaign</a>,
+                description: <Link href={`/campaigns/${address}`}>View Campaign</Link>,
                 fluid: true
             };
         });
@@ -28,26 +24,31 @@ class CampaignIndex extends React.Component {
         return <Card.Group items={items}/>
     };
 
+    return(
+            <div>
+                <h3>Open Camapigns</h3>
+                
+                <Button
+                    content="Create Campaign"
+                    icon="add circle"
+                    primary
+                    labelPosition='right'
+                    floated='right'
+                    onClick={() => router.push("/campaigns/new")}
+                />
+                {renderCampaigns()}
+            </div>
 
-
-    render() {
-        return(
-            <Layout> 
-                <div>
-                    <h3>Open Camapigns</h3>
-                    
-                    <Button
-                        content="Create Campaign"
-                        icon="add circle"
-                        primary
-                        labelPosition='right'
-                        floated='right'
-                    />
-                    {this.renderCampaigns()}
-                </div>
-            </Layout>
-    )};
-}
+)};
 
 export default CampaignIndex;
 
+export async function getServerSideProps(context) {
+    const campaigns = await factory.methods.getDeployedCampaigns().call();
+    
+    return {
+        props: {
+            campaigns,
+        },
+    };
+};

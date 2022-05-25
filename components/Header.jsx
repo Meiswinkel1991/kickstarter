@@ -1,29 +1,29 @@
 import React from 'react';
-
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { Menu,Icon} from 'semantic-ui-react';
 
 
 const Header = () =>{
-    const router = useRouter();
 
     return(
         <Menu style={{marginTop: '10px'}}>
-            <Menu.Item onClick={router.push('/')}>
-                <a>
+            <Link href='/'>
+                <Menu.Item >
                     <Icon name='ethereum' circular inverted color='teal' size='large'/>
                     CrowdCoin
-                </a>
-            </Menu.Item>
+                </Menu.Item>            
+            </Link>
 
             <Menu.Menu position="right">
-                
-                <Menu.Item>Campaigns</Menu.Item>
-                
-                <Menu.Item>
-                    +
-                </Menu.Item>
+                <Link href="/">
+                    <Menu.Item>Campaigns</Menu.Item>
+                </Link>
+                <Link href="/campaigns/new">
+                    <Menu.Item>
+                        +
+                    </Menu.Item>
+                </Link>
             </Menu.Menu>
         </Menu>
     )
